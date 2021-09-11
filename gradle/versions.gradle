@@ -4,7 +4,7 @@
 
 ext{
 
-    kotlin_version = "1.4.21"
+    kotlin_version = "1.5.21"
 
     coroutine_core = "1.4.21"
 
@@ -27,5 +27,13 @@ ext{
     lottie = "3.4.4"
 
     hilt_version = "2.38.1"
+
+    hilt_lifecycle_viewmodel = "1.0.0-alpha03"
+
+    retrofit = "2.9.0"
+
+    okhhtp_loggin_interceptor = "4.9.0"
+
+    glide = "4.12.0"
 
 }

@@ -21,13 +21,18 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "API_KEY", "\"Uxj988KGBYndLY7EUIMga2cqQ9N0kDa6\""
+        buildConfigField "String", "BASE_URL", "\"https://api.giphy.com/v1/gifs/\""
+
     }
 
-    buildFeatures{
+    buildFeatures {
         viewBinding true
     }
 
     buildTypes {
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -80,5 +85,21 @@ dependencies {
     //Hilt for dependency Injection
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecycle_viewmodel"
+    kapt "androidx.hilt:hilt-compiler:$hilt_lifecycle_viewmodel"
+
+    //Retrofit for Networking
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhhtp_loggin_interceptor"
+
+    //Glide
+    implementation "com.github.bumptech.glide:glide:$glide"
+    kapt "com.github.bumptech.glide:compiler:$glide"
+    implementation "com.squareup.okhttp3:okhttp:4.9.0"
+    implementation ('com.github.bumptech.glide:okhttp3-integration:4.7.1'){
+        exclude group: 'glide-parent'
+    }
 
 }
