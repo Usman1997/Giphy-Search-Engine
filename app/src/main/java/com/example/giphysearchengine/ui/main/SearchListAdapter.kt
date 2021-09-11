@@ -2,6 +2,8 @@ package com.example.giphysearchengine.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.giphysearchengine.databinding.SearchListItemBinding
 import com.example.giphysearchengine.di.GlideApp
@@ -14,13 +16,17 @@ class SearchListAdapter(
     inner class ViewHolder(val binding: SearchListItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    private var list = emptyList<Data>()
+    private val differCallback = object : DiffUtil.ItemCallback<Data>() {
+        override fun areItemsTheSame(oldItem: Data, newItem: Data): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    fun setData(items: List<Data>) {
-        if (items != null)
-            list = items
-        notifyDataSetChanged()
+        override fun areContentsTheSame(oldItem: Data, newItem: Data): Boolean {
+            return oldItem == newItem
+        }
     }
+
+    val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
@@ -31,13 +37,13 @@ class SearchListAdapter(
             )
         )
 
-    override fun getItemCount(): Int = list.size
+    override fun getItemCount(): Int = differ.currentList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.binding) {
             val context = root.context
 
-            val item = list[position]
+            val item = differ.currentList[position]
 
             GlideApp.with(context)
                 .load(item.images.preview_gif.url)

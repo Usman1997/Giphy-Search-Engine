@@ -3,19 +3,18 @@ package com.example.giphysearchengine.ui.main
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import androidx.core.view.isGone
+import android.widget.AbsListView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.giphysearchengine.R
 import com.example.giphysearchengine.databinding.MainFragmentBinding
 import com.example.giphysearchengine.ui.base.BaseFragment
 import com.example.giphysearchengine.ui.base.viewBinding
 import com.example.giphysearchengine.utils.*
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,44 +26,26 @@ class MainFragment : BaseFragment<MainFragmentBinding>(R.layout.main_fragment) {
 
     private lateinit var listAdapter: SearchListAdapter
 
+    //For Pagination
+    private var currentPage = 0
+    private var isError = false
+    private var isLoading = false
+    private var isScrolling = false
+    private var isLastPage = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        listAdapter = SearchListAdapter(
-            onClick = {
-                findNavController()?.safeNavigate(
-                    MainFragmentDirections.showDetailFragment(
-                        it.images.original.url
-                    )
-                )
-            }
-        )
+        setUpRecyclerView()
 
         binding.apply {
 
-            with(list) {
-                layoutManager = GridLayoutManager(context, 2)
-                adapter = listAdapter
-            }
-
             evSearch.initTextChangeListener(lifecycleScope) {
-//                if (it.length < 3) {
-//                    listAdapter.setData(emptyList())
-//                    tvNoResult.isVisible = true
-//                } else {
-//                    viewModel.search(it, 25)
-//                }
-
-                if(it.isNotEmpty()){
-                    viewModel.search(it, 25)
+                if (it.isNotEmpty()) {
+                    reset()
+                    viewModel.reset()
+                    viewModel.search(it, currentPage * Constants.QUERY_PER_PAGE)
                 }
-
-//                it.isEmpty().apply {
-//                    emptyView.isVisible = this
-//                    list.isGone = this
-//                    if (this)
-//                        tvNoResult.isGone = true
-//                }
             }
 
             evSearch.setOnEditorActionListener { _, actionId, event ->
@@ -89,14 +70,83 @@ class MainFragment : BaseFragment<MainFragmentBinding>(R.layout.main_fragment) {
 
                     is State.Idle -> {
                         loading.isVisible = false
-                        //tvNoResult.isVisible = state.data?.data.isNullOrEmpty()
-
-                        state.data?.data?.let {
-                            listAdapter.setData(it)
+                        currentPage++
+                        state.data?.let {
+                            isLastPage = isLastPage(it.pagination.total_count)
+                            listAdapter.differ.submitList(it.data.toList())
                         }
                     }
                 }
             }
         }
+    }
+
+    private fun setUpRecyclerView() {
+        listAdapter = SearchListAdapter(
+            onClick = {
+                findNavController()?.safeNavigate(
+                    MainFragmentDirections.showDetailFragment(
+                        it.images.original.url
+                    )
+                )
+            }
+        )
+
+        binding.apply {
+            with(list) {
+                layoutManager = GridLayoutManager(context, 2)
+                adapter = listAdapter
+                addOnScrollListener(this@MainFragment.scrollListener)
+            }
+        }
+    }
+
+    private val scrollListener = object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+
+            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+            val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+            val visibleItemCount = layoutManager.childCount
+            val totalItemCount = layoutManager.itemCount
+
+            val isNoErrors = !isError
+            val isNotLoadingAndNotLastPage = !isLoading && !isLastPage
+            val isAtLastItem = firstVisibleItemPosition + visibleItemCount >= totalItemCount
+            val isNotAtBeginning = firstVisibleItemPosition >= 0
+            val isTotalMoreThanVisible = totalItemCount >= Constants.QUERY_PER_PAGE
+            val shouldPaginate =
+                isNoErrors && isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning &&
+                        isTotalMoreThanVisible && isScrolling
+            if (shouldPaginate) {
+                binding.apply {
+                    viewModel.search(
+                        evSearch.text.toString(),
+                        currentPage * Constants.QUERY_PER_PAGE
+                    )
+                }
+                isScrolling = false
+            }
+        }
+
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                isScrolling = true
+            }
+        }
+    }
+
+    private fun isLastPage(totalCount: Int): Boolean {
+        var totalPage = totalCount / Constants.QUERY_PER_PAGE
+        if (totalCount % Constants.QUERY_PER_PAGE != 0) {
+            totalPage++
+        }
+        return currentPage == totalPage
+    }
+
+    private fun reset() {
+        currentPage = 0
+        isLastPage = false
     }
 }

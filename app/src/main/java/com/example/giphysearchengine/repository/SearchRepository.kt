@@ -14,7 +14,7 @@ interface SearchRepository {
         param: String,
         offset: Int,
         rating: String = Rating.G.value,
-        lang: String = "en"
+        lang: String = Constants.lang
     ): Flow<State<SearchResponse>>
 }
 

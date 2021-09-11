@@ -5,7 +5,7 @@ sealed class State<T>(
     open val data: T?
 ) {
     class Idle<T>(override val data: T? = null) : State<T>(data)
-    data class Error<T>(override val data: T? = null, val error: Throwable) : State<T>(data)
+    class Error<T>(override val data: T? = null, val error: Throwable) : State<T>(data)
     class Loading<T>(override val data: T? = null) : State<T>(data)
 
     val isLoading: Boolean
