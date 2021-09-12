@@ -33,7 +33,6 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(R.layout.search_fragm
     private lateinit var listAdapter: SearchListAdapter
 
     //For Pagination
-    private var currentPage = 0
     private var isError = false
     private var isLoading = false
     private var isScrolling = false
@@ -48,9 +47,8 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(R.layout.search_fragm
 
             evSearch.initTextChangeListener(lifecycleScope) {
                 if (it.isNotEmpty()) {
-                    reset()
                     viewModel.reset()
-                    viewModel.search(it, currentPage * Constants.QUERY_PER_PAGE)
+                    viewModel.search(it)
                 }
             }
 
@@ -74,7 +72,6 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(R.layout.search_fragm
                     is State.Idle -> {
                         hideProgressBar()
                         hideErrorView()
-                        currentPage++
                         state.data?.let {
                             isLastPage = isLastPage(it.pagination.total_count)
                             if(isLastPage) list.setPadding(0, 0, 0, 0)
@@ -137,9 +134,7 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(R.layout.search_fragm
             if (shouldPaginate) {
                 binding.apply {
                     viewModel.search(
-                        evSearch.text.toString(),
-                        currentPage * Constants.QUERY_PER_PAGE
-                    )
+                        evSearch.text.toString())
                 }
                 isScrolling = false
             }
@@ -179,11 +174,7 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(R.layout.search_fragm
         if (totalCount % Constants.QUERY_PER_PAGE != 0) {
             totalPage++
         }
-        return currentPage == totalPage
+        return viewModel.currentPage == totalPage
     }
 
-    private fun reset() {
-        currentPage = 0
-        isLastPage = false
-    }
 }
