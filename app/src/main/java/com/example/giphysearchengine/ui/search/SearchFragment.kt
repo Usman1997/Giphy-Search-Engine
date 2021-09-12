@@ -6,7 +6,6 @@ package com.example.giphysearchengine.ui.search
 
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.AbsListView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -60,19 +59,21 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(R.layout.search_fragm
 
             viewModel.state().observe(viewLifecycleOwner) { state ->
                 when (state) {
-                    is State.Loading -> loading.isVisible = true
+                    is State.Loading -> showProgressBar()
 
                     is State.Error -> {
                         /**
                          * Here you can check the exception type by
                          * state.error is ApiException -> and handle your exception accordingly
                          */
-                        loading.isVisible = false
+                        hideProgressBar()
+                        showErrorView()
                         root.showSnackBar(state.error.toLocalizedMessage(resources))
                     }
 
                     is State.Idle -> {
-                        loading.isVisible = false
+                        hideProgressBar()
+                        hideErrorView()
                         currentPage++
                         state.data?.let {
                             isLastPage = isLastPage(it.pagination.total_count)
@@ -92,7 +93,8 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(R.layout.search_fragm
                     SearchFragmentDirections.showDetailFragment(data.images.preview_gif.url)
 
                 val extras = FragmentNavigatorExtras(
-                    imageView to data.images.preview_gif.url)
+                    imageView to data.images.preview_gif.url
+                )
 
                 findNavController().navigate(directions, extras)
 
@@ -151,6 +153,24 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(R.layout.search_fragm
                 isScrolling = true
             }
         }
+    }
+
+    private fun showProgressBar() {
+        binding.apply { loading.isVisible = true }
+        isLoading = true
+    }
+
+    private fun hideProgressBar() {
+        binding.apply { loading.isVisible = false }
+        isLoading = false
+    }
+
+    private fun hideErrorView() {
+        isError = false
+    }
+
+    private fun showErrorView() {
+        isError = true
     }
 
     private fun isLastPage(totalCount: Int): Boolean {

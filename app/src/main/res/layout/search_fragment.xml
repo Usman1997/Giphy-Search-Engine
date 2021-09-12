@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Created by Usman Siddiqui -->
+<?xml version="1.0" encoding="utf-8"?><!-- Created by Usman Siddiqui -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/root"
     android:background="@drawable/bg_gradient">
 
     <androidx.appcompat.widget.Toolbar
@@ -18,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="GIPHY Search Engine"
-        app:titleTextColor="@color/regularGrey"/>
+        app:titleTextColor="@color/regularGrey" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/searchLayout"
@@ -40,32 +39,32 @@
             android:layout_marginTop="@dimen/small_gap"
             android:layout_marginEnd="@dimen/medium_gap"
             android:layout_marginBottom="@dimen/small_gap"
-            android:src="@drawable/ic_search"
             android:rotation="90"
+            android:src="@drawable/ic_search"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/evSearch"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <EditText
             android:id="@+id/evSearch"
+            style="@style/editTextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_gap"
             android:layout_marginEnd="@dimen/medium_gap"
             android:layout_marginBottom="@dimen/small_gap"
-            android:paddingTop="@dimen/tiny_gap"
-            android:paddingBottom="@dimen/tiny_gap"
             android:hint="@string/search_hint"
             android:imeOptions="actionDone"
             android:inputType="text"
-            android:background="@android:color/transparent"
+            android:paddingTop="@dimen/tiny_gap"
+            android:paddingBottom="@dimen/tiny_gap"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivSearch"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@android:color/transparent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -80,19 +79,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchLayout" />
 
-    <TextView
-        style="@style/editTextStyle"
-        android:id="@+id/tvNoResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/medium_gap"
-        android:layout_marginEnd="@dimen/medium_gap"
-        android:text="@string/no_giphy_found"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchLayout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
