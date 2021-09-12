@@ -1,4 +1,8 @@
-package com.example.giphysearchengine.ui.main
+/*
+ Created by Usman Siddiqui
+ */
+
+package com.example.giphysearchengine.ui.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel
+class SearchViewModel
 @Inject constructor(
     private val searchRepository: SearchRepository
 ) : ViewModel() {

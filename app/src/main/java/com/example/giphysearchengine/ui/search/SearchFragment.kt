@@ -1,4 +1,8 @@
-package com.example.giphysearchengine.ui.main
+/*
+ Created by Usman Siddiqui
+ */
+
+package com.example.giphysearchengine.ui.search
 
 import android.os.Bundle
 import android.view.View
@@ -13,18 +17,19 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.giphysearchengine.R
-import com.example.giphysearchengine.databinding.MainFragmentBinding
+import com.example.giphysearchengine.databinding.SearchFragmentBinding
+import com.example.giphysearchengine.network.errors.toLocalizedMessage
 import com.example.giphysearchengine.ui.base.BaseFragment
 import com.example.giphysearchengine.ui.base.viewBinding
 import com.example.giphysearchengine.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment : BaseFragment<MainFragmentBinding>(R.layout.main_fragment) {
+class SearchFragment : BaseFragment<SearchFragmentBinding>(R.layout.search_fragment) {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: SearchViewModel by viewModels()
 
-    override val binding by viewBinding(MainFragmentBinding::bind)
+    override val binding by viewBinding(SearchFragmentBinding::bind)
 
     private lateinit var listAdapter: SearchListAdapter
 
@@ -50,14 +55,6 @@ class MainFragment : BaseFragment<MainFragmentBinding>(R.layout.main_fragment) {
                 }
             }
 
-            evSearch.setOnEditorActionListener { _, actionId, event ->
-                if (event != null) {
-                    if (actionId == EditorInfo.IME_ACTION_DONE)
-                        evSearch.hideKeyboard()
-                    true
-                } else
-                    false
-            }
 
             evSearch.showKeyboard()
 
@@ -92,7 +89,7 @@ class MainFragment : BaseFragment<MainFragmentBinding>(R.layout.main_fragment) {
             onClick = { data, imageView ->
 
                 val directions =
-                    MainFragmentDirections.showDetailFragment(data.images.preview_gif.url)
+                    SearchFragmentDirections.showDetailFragment(data.images.preview_gif.url)
 
                 val extras = FragmentNavigatorExtras(
                     imageView to data.images.preview_gif.url)
@@ -112,7 +109,7 @@ class MainFragment : BaseFragment<MainFragmentBinding>(R.layout.main_fragment) {
                     true
                 }
 
-                addOnScrollListener(this@MainFragment.scrollListener)
+                addOnScrollListener(this@SearchFragment.scrollListener)
             }
         }
     }
@@ -148,6 +145,9 @@ class MainFragment : BaseFragment<MainFragmentBinding>(R.layout.main_fragment) {
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
             if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                binding.apply {
+                    evSearch.hideKeyboard()
+                }
                 isScrolling = true
             }
         }

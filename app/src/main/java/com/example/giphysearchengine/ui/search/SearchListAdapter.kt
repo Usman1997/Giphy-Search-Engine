@@ -1,4 +1,8 @@
-package com.example.giphysearchengine.ui.main
+/*
+ Created by Usman Siddiqui
+ */
+
+package com.example.giphysearchengine.ui.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

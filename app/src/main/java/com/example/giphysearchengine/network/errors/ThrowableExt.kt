@@ -1,4 +1,8 @@
-package com.example.giphysearchengine.utils
+/*
+ Created by Usman Siddiqui
+ */
+
+package com.example.giphysearchengine.network.errors
 
 import android.content.res.Resources
 import com.example.giphysearchengine.R

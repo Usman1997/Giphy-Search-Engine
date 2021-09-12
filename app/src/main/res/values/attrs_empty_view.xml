@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Created by Usman Siddiqui -->
+
 <resources>
 
 <declare-styleable name="EmptyView">

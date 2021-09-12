@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
 
+<!-- Created by Usman Siddiqui -->
+
+<resources>
+    <dimen name="tiny_gap">4dp</dimen>
+    <dimen name="small_gap">8dp</dimen>
+    <dimen name="medium_gap">16dp</dimen>
+    <dimen name="large_gap">24dp</dimen>
+    <dimen name="xlarge_gap">32dp</dimen>
+    <dimen name="xxlarge_gap">48dp</dimen>
 </resources>

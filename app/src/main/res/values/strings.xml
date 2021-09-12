@@ -1,10 +1,9 @@
+<!-- Created by Usman Siddiqui -->
 <resources>
     <string name="app_name">Giphy Search Engine</string>
     <string name="search_hint">Search GIPHY</string>
     <string name="no_giphy_found">No GIFs Found for this search result</string>
-    <string name="search_to_get_best_gifs_in_the_world">Search to get best GIFs in the world.</string>
 
-    
     <!-- errors -->
     <string name="error_unknown_host">There is no connection to the server. Please check your internet connection and try again later.</string>
     <string name="error_socket_timeout_exception">Communication with the server timed out</string>

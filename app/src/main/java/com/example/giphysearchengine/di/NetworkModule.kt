@@ -1,3 +1,7 @@
+/*
+ Created by Usman Siddiqui
+ */
+
 package com.example.giphysearchengine.di
 
 import com.example.giphysearchengine.BuildConfig

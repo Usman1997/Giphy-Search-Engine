@@ -1,8 +1,8 @@
 /*
- Created by Usman Siddiqui on 09.09.2021
+ Created by Usman Siddiqui
  */
 
-ext{
+ext {
 
     kotlin_version = "1.5.21"
 

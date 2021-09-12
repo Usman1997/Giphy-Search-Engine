@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+
+<!-- Created by Usman Siddiqui -->
+
+<resources>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    
+    <style name="editTextStyle" parent="@style/Widget.AppCompat.EditText">
+        <item name="android:textCursorDrawable">@drawable/cursor_drawable</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textColorHint">@color/regularGrey</item>
     </style>
 
 

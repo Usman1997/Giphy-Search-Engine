@@ -1,6 +1,10 @@
+/*
+ Created by Usman Siddiqui
+ */
+
 package com.example.giphysearchengine.network.interceptors
 
-import com.example.giphysearchengine.utils.ApiException
+import com.example.giphysearchengine.network.errors.ApiException
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response

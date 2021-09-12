@@ -1,5 +1,8 @@
-package com.example.giphysearchengine.utils
+/*
+ Created by Usman Siddiqui
+ */
 
+package com.example.giphysearchengine.utils
 
 sealed class State<T>(
     open val data: T?

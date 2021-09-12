@@ -1,3 +1,7 @@
+/*
+ Created by Usman Siddiqui
+ */
+
 package com.example.giphysearchengine.ui.detail
 
 import android.graphics.drawable.Drawable

@@ -1,15 +1,15 @@
+/*
+ Created by Usman Siddiqui
+ */
+
 package com.example.giphysearchengine.utils
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.isVisible
 import com.example.giphysearchengine.R
 import com.example.giphysearchengine.databinding.EmptyViewBinding
 

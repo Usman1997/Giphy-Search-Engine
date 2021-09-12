@@ -1,3 +1,7 @@
+/*
+ Created by Usman Siddiqui
+ */
+
 package com.example.giphysearchengine.network
 
 import com.example.giphysearchengine.network.entity.SearchResponse

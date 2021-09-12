@@ -1,6 +1,9 @@
+/*
+ Created by Usman Siddiqui
+ */
+
 package com.example.giphysearchengine.repository
 
-import com.example.giphysearchengine.BuildConfig
 import com.example.giphysearchengine.network.GiphyService
 import com.example.giphysearchengine.network.entity.SearchResponse
 import com.example.giphysearchengine.utils.Constants

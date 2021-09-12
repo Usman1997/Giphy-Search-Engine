@@ -1,3 +1,7 @@
+/*
+ Created by Usman Siddiqui
+ */
+
 package com.example.giphysearchengine.network.interceptors
 
 import com.example.giphysearchengine.BuildConfig
