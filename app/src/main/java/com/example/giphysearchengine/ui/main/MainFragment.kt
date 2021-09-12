@@ -66,6 +66,10 @@ class MainFragment : BaseFragment<MainFragmentBinding>(R.layout.main_fragment) {
                     is State.Loading -> loading.isVisible = true
 
                     is State.Error -> {
+                        /**
+                         * Here you can check the exception type by
+                         * state.error is ApiException -> and handle your exception accordingly
+                         */
                         loading.isVisible = false
                         root.showSnackBar(state.error.toLocalizedMessage(resources))
                     }

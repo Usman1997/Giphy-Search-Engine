@@ -1,4 +1,4 @@
-package com.example.giphysearchengine.utils
+package com.example.giphysearchengine.network
 
 import javax.inject.Qualifier
 
