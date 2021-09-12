@@ -25,7 +25,6 @@ class SearchRepositoryImpl(
         flow {
             emit(
                 giphyService.search(
-                    BuildConfig.API_KEY,
                     param,
                     Constants.QUERY_PER_PAGE,
                     offset,

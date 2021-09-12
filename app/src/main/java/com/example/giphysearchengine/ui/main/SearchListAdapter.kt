@@ -2,15 +2,19 @@ package com.example.giphysearchengine.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.example.giphysearchengine.R
 import com.example.giphysearchengine.databinding.SearchListItemBinding
 import com.example.giphysearchengine.di.GlideApp
 import com.example.giphysearchengine.network.entity.Data
 
 class SearchListAdapter(
-    private val onClick: (Data) -> Unit
+    private val onClick: (Data, ImageView) -> Unit
 ) : RecyclerView.Adapter<SearchListAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: SearchListItemBinding) :
@@ -47,10 +51,15 @@ class SearchListAdapter(
 
             GlideApp.with(context)
                 .load(item.images.preview_gif.url)
+                .centerCrop()
+                .placeholder(R.drawable.bg_placeholder)
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(ivImage)
 
+            ViewCompat.setTransitionName(ivImage, item.images.preview_gif.url)
+
             root.setOnClickListener {
-                onClick(item)
+                onClick(item, ivImage)
             }
         }
     }

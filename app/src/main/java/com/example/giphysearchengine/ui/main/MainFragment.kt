@@ -7,6 +7,8 @@ import android.widget.AbsListView
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -83,12 +85,16 @@ class MainFragment : BaseFragment<MainFragmentBinding>(R.layout.main_fragment) {
 
     private fun setUpRecyclerView() {
         listAdapter = SearchListAdapter(
-            onClick = {
-                findNavController()?.safeNavigate(
-                    MainFragmentDirections.showDetailFragment(
-                        it.images.original.url
-                    )
-                )
+            onClick = { data, imageView ->
+
+                val directions =
+                    MainFragmentDirections.showDetailFragment(data.images.preview_gif.url)
+
+                val extras = FragmentNavigatorExtras(
+                    imageView to data.images.preview_gif.url)
+
+                findNavController().navigate(directions, extras)
+
             }
         )
 
@@ -96,6 +102,12 @@ class MainFragment : BaseFragment<MainFragmentBinding>(R.layout.main_fragment) {
             with(list) {
                 layoutManager = GridLayoutManager(context, 2)
                 adapter = listAdapter
+                postponeEnterTransition()
+                viewTreeObserver.addOnPreDrawListener {
+                    startPostponedEnterTransition()
+                    true
+                }
+
                 addOnScrollListener(this@MainFragment.scrollListener)
             }
         }

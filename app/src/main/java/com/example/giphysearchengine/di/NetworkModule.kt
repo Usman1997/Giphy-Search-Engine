@@ -1,12 +1,18 @@
 package com.example.giphysearchengine.di
 
+import android.os.Build
+import com.bumptech.glide.RequestBuilder
 import com.example.giphysearchengine.BuildConfig
 import com.example.giphysearchengine.network.GiphyService
+import com.example.giphysearchengine.utils.ApiKeyInterceptorOkHttpClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.HttpUrl
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -26,9 +32,24 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun providesOkhttpClient(httpLoggingInterceptor: HttpLoggingInterceptor) =
+    fun providesOkhttpInterceptor(): Interceptor {
+        return Interceptor { chain: Interceptor.Chain ->
+            val original: Request = chain.request()
+            val httpUrl: HttpUrl = original.url
+            val url: HttpUrl = httpUrl.newBuilder()
+                .addQueryParameter("api_key", BuildConfig.API_KEY)
+                .build()
+            val request: Request = original.newBuilder().url(url).build()
+            chain.proceed(request)
+        }
+    }
+
+    @Singleton
+    @Provides
+    fun providesOkhttpClient(httpLoggingInterceptor: HttpLoggingInterceptor, okhttpInterceptor: Interceptor) =
         OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
+            .addInterceptor(okhttpInterceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)

@@ -5,13 +5,13 @@ import androidx.annotation.IdRes
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
-import androidx.navigation.Navigator
+import androidx.navigation.fragment.FragmentNavigator
 
 fun NavController.safeNavigate(
     @IdRes resId: Int,
     args: Bundle? = null,
     navOptions: NavOptions? = null,
-    navigatorExtras: Navigator.Extras? = null
+    navigatorExtras: FragmentNavigator.Extras? = null
 ) {
     val destinationId =
         (currentDestination?.getAction(resId)?.destinationId ?: graph.getAction(resId)) ?: resId
@@ -25,7 +25,7 @@ fun NavController.safeNavigate(
 fun NavController.safeNavigate(
     directions: NavDirections,
     navOptions: NavOptions? = null,
-    navigatorExtras: Navigator.Extras? = null
+    navigatorExtras: FragmentNavigator.Extras? = null
 ) {
     safeNavigate(directions.actionId, directions.arguments, navOptions, navigatorExtras)
 }
