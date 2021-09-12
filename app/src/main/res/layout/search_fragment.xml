@@ -68,27 +68,28 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ProgressBar
-        android:id="@+id/loading"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchLayout" />
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/small_gap"
         android:visibility="visible"
+        android:paddingBottom="50dp"
+        android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchLayout" />
+
+    <ProgressBar
+        android:id="@+id/loading"
+        style="?attr/progressBarStyle"
+        android:indeterminateTint="@color/pink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

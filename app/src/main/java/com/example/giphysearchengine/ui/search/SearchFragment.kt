@@ -77,6 +77,7 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(R.layout.search_fragm
                         currentPage++
                         state.data?.let {
                             isLastPage = isLastPage(it.pagination.total_count)
+                            if(isLastPage) list.setPadding(0, 0, 0, 0)
                             listAdapter.differ.submitList(it.data.toList())
                         }
                     }
