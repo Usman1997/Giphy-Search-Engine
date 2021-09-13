@@ -16,18 +16,30 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+/**
+ * Extension function to show keyboard
+ */
 fun View?.showKeyboard() {
     if (this == null) return
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
 }
 
+/**
+ * Extension function to hide keyboard
+ */
 fun View?.hideKeyboard() {
     if (this == null) return
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(windowToken, 0)
 }
 
+/**
+ * This function is to limit the API request when the user is typing. We don't want to make
+ * API request for every character typed by user in search bar so we have setup a time span in
+ * which an API request is made when the user is typing. For this purpose, we have used debouce here
+ * because debouce operator filters out item that are rapidly followed by another emitted item.
+ */
 fun EditText.initTextChangeListener(
     scope: CoroutineScope,
     onChanged: (String) -> Unit
@@ -50,6 +62,9 @@ fun EditText.initTextChangeListener(
     })
 }
 
+/**
+ * Extension function to show snackbar
+ */
 fun View.showSnackBar(message: String){
     Snackbar.make(this,message,Snackbar.LENGTH_LONG).show()
 }

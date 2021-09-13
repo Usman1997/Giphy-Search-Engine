@@ -26,6 +26,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    /**
+     * Logging interceptor
+     */
     @Singleton
     @Provides
     fun providesHttpLoggingInterceptor() =
@@ -34,16 +37,27 @@ object NetworkModule {
         }
 
 
+    /**
+     * Interceptor to inject API Key in query param for every request
+     */
     @ApiKeyInterceptorOkHttpClient
     @Singleton
     @Provides
     fun providesApiKeyInterceptor(): Interceptor = ApiKeyInterceptor()
 
+    /**
+     * Error Interceptor for error handling. We need this annotation (qualifiers) to
+     * have multiple binding for same type. Since both APIKeyInterceptor and ErrorInterceptor
+     * have same type (Interceptor), we need qualifiers to differentiate them
+     */
     @ErrorInterceptorOkHttpClient
     @Singleton
     @Provides
     fun providesErrorInterceptor(): Interceptor = ErrorInterceptor()
 
+    /**
+     * Provides Okhttp client to retrofit builder
+     */
     @Singleton
     @Provides
     fun providesOkhttpClient(
@@ -60,6 +74,9 @@ object NetworkModule {
             .writeTimeout(30, TimeUnit.SECONDS)
             .build()
 
+    /**
+     * Retrofit Builder
+     */
     @Singleton
     @Provides
     fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit =
@@ -69,6 +86,9 @@ object NetworkModule {
             .client(okHttpClient)
             .build()
 
+    /**
+     * Retrofit Service
+     */
     @Singleton
     @Provides
     fun providesGiphyService(retrofit: Retrofit): GiphyService =

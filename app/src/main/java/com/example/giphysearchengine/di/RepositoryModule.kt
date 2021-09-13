@@ -17,6 +17,10 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
 
+    /**
+     * We have injected API Service in Search Repository Constructor to
+     * call API from the repository
+     */
     @Singleton
     @Provides
     fun provideSearchRepository(

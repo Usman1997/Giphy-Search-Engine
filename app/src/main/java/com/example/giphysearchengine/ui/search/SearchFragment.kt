@@ -52,7 +52,6 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(R.layout.search_fragm
                 }
             }
 
-
             evSearch.showKeyboard()
 
             viewModel.state().observe(viewLifecycleOwner) { state ->
@@ -62,7 +61,8 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(R.layout.search_fragm
                     is State.Error -> {
                         /**
                          * Here you can check the exception type by
-                         * state.error is ApiException -> and handle your exception accordingly
+                         * state.error is ApiException.YourDesiredType -> and handle your exception
+                         * accordingly
                          */
                         hideProgressBar()
                         showErrorView()

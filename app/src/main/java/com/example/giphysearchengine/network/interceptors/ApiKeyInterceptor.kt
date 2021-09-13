@@ -10,7 +10,9 @@ import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 
-
+/**
+ * Interceptor add API Key as Query param for every request
+ */
 class ApiKeyInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val original: Request = chain.request()

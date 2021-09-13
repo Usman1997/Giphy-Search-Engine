@@ -41,12 +41,13 @@ class DetailFragment : BaseFragment<DetailFragmentBinding>(R.layout.detail_fragm
 
             ViewCompat.setTransitionName(ivImage, args.url)
 
-
-            //TODO Glide has a bug to load GIF with shared element transition therefore
-            // we have to add postponeEnterTransition before setting the GIF and then calling
-            // startPostponedTransition in onLoad and onResourceReady. We can maybe remove this
-            // when Glide fix this bug in a new version
-            // https://stackoverflow.com/questions/55980750/gif-is-not-playing-after-shared-element-transition-glide-v-4-8-0
+            /**
+             * TODO Glide has a bug to load GIF with shared element transition therefore
+             * we have to add postponeEnterTransition before setting the GIF and then calling
+             * startPostponedTransition in onLoad and onResourceReady. We can maybe remove this
+             * when Glide fix this bug in a new version
+             * https://stackoverflow.com/questions/55980750/gif-is-not-playing-after-shared-element-transition-glide-v-4-8-0
+             */
 
             GlideApp.with(requireActivity())
                 .load(args.url)

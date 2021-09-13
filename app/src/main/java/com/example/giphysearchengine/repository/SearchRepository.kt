@@ -24,6 +24,10 @@ interface SearchRepository {
 class SearchRepositoryImpl(
     private val giphyService: GiphyService
 ) : SearchRepository {
+
+    /**
+     * This function will communicate with server to fetch data from API
+     */
     override suspend fun search(param: String, offset: Int, rating: String, lang: String) =
         flow {
             emit(

@@ -11,6 +11,10 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 fun Throwable.toLocalizedMessage(resources: Resources) =
+    /**
+     * Here we check the type of Exception at run time and pass the message
+     * accordingly to show meaningful information to the user
+     */
     when (this) {
         is SocketTimeoutException -> resources.getString(R.string.error_socket_timeout_exception)
         is ConnectException -> resources.getString(R.string.error_unknown_host)

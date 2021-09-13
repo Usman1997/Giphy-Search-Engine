@@ -27,6 +27,10 @@ class SearchViewModel
     private var searchResponse: SearchResponse? = null
     var currentPage = 0
 
+    /**
+     * This function will communicate with the repository to fetch data from
+     * server
+     */
     fun search(param: String) {
         viewModelScope.launch {
             searchRepository.search(
@@ -38,13 +42,23 @@ class SearchViewModel
         }
     }
 
+    /**
+     * This function will emit response to UI according to the current state
+     */
     private fun emitResponse(responseState: State<SearchResponse>) = when (responseState) {
         is State.Loading -> state.postValue(State.loading())
         is State.Error -> state.postValue(State.error(responseState.error))
         is State.Idle -> state.postValue(handleResponse(responseState.data))
     }
 
-
+    /**
+     * We can not directly update the mutable live data because if the mutable live data only holds
+     * the current state of data then it will not be able to recover all the previous data in case
+     * of configuration changes. For example, the user is on page 3 and the user rotate the device then
+     * we will only have the data of page 3 if we directly update the data state. In order to avoid this
+     * we have this function which will keep the data of all pages and pass it adapter which will find
+     * the new items using diff utils.
+     */
     private fun handleResponse(response: SearchResponse?): State<SearchResponse> {
         response?.let {
             currentPage++
@@ -60,10 +74,18 @@ class SearchViewModel
         return State.idle(searchResponse ?: response)
     }
 
+    /**
+     * This function is to reset the page and search response when the user search new keywords
+     * so that the old data will be removed and new data is shown to the user
+     */
     fun reset() {
         currentPage = 0
         searchResponse = null
     }
 
+    /**
+     * This function is to expose live data to UI. The UI should only be able to
+     * read live data therefore it should not have to access to mutable live data
+     */
     fun state(): LiveData<State<SearchResponse>> = state
 }

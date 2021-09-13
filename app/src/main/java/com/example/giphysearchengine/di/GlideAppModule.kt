@@ -18,6 +18,11 @@ import java.util.concurrent.TimeUnit
 @GlideModule
 class GlideAppModule : AppGlideModule() {
 
+    /**
+     * We need to override this method because sometimes the gifs are of larger size
+     * and it takes longer for glide to load the gifs in the view. In order to avoid
+     * timeout exception we have set the timeout to 30 seconds
+     */
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
         val client = OkHttpClient.Builder()
             .readTimeout(30, TimeUnit.SECONDS)

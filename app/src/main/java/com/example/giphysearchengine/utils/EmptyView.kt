@@ -13,6 +13,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.giphysearchengine.R
 import com.example.giphysearchengine.databinding.EmptyViewBinding
 
+/**
+ * This view is to show errors and empty state from your API.
+ */
 class EmptyView : ConstraintLayout {
     private val binding = EmptyViewBinding.inflate(LayoutInflater.from(context), this, true)
 
