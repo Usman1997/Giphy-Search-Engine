@@ -62,7 +62,7 @@ class SearchViewModel
     private fun handleResponse(response: SearchResponse?): State<SearchResponse> {
         response?.let {
 
-            setCurrentPage(currentPage++)
+            setCurrentPage(currentPage+1)
 
             if (searchResponse == null) {
                 searchResponse = response
