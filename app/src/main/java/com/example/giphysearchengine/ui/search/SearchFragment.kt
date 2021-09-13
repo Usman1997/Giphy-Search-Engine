@@ -74,7 +74,7 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(R.layout.search_fragm
                         hideErrorView()
                         state.data?.let {
                             isLastPage = viewModel.isLastPage(it.pagination.total_count)
-                            if(isLastPage) list.setPadding(0, 0, 0, 0)
+                            if (isLastPage) list.setPadding(0, 0, 0, 0)
                             listAdapter.differ.submitList(it.data.toList())
                         }
                     }
@@ -134,7 +134,8 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(R.layout.search_fragm
             if (shouldPaginate) {
                 binding.apply {
                     viewModel.search(
-                        evSearch.text.toString())
+                        evSearch.text.toString()
+                    )
                 }
                 isScrolling = false
             }

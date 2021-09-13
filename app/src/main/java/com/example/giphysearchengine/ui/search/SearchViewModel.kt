@@ -25,7 +25,7 @@ class SearchViewModel
 
     private val state = MutableLiveData<State<SearchResponse>>()
     private var searchResponse: SearchResponse? = null
-    var currentPage = 0
+    private var currentPage = 0
 
     /**
      * This function will communicate with the repository to fetch data from
@@ -61,7 +61,9 @@ class SearchViewModel
      */
     private fun handleResponse(response: SearchResponse?): State<SearchResponse> {
         response?.let {
-            currentPage++
+
+            setCurrentPage(currentPage++)
+
             if (searchResponse == null) {
                 searchResponse = response
             } else {
@@ -91,8 +93,19 @@ class SearchViewModel
      * so that the old data will be removed and new data is shown to the user
      */
     fun reset() {
-        currentPage = 0
+        setCurrentPage(0)
         searchResponse = null
+    }
+
+    /**
+     * We can directly update the current page anywhere in this class but the reason to use
+     * this function is to have an ability to set current page from the test class and test
+     * isLastPage method properly. I can directly update the variable but that is not a good practice.
+     * The variable currentPage should be private to this class and can only be updated through setter
+     * method
+     */
+    fun setCurrentPage(value: Int) {
+        currentPage = value
     }
 
     /**

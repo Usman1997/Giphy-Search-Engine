@@ -20,7 +20,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.example.giphysearchengine.HiltTestRunner"
 
         buildConfigField "String", "API_KEY", "\"Uxj988KGBYndLY7EUIMga2cqQ9N0kDa6\""
         buildConfigField "String", "BASE_URL", "\"https://api.giphy.com/v1/gifs/\""
@@ -49,10 +49,20 @@ android {
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
+    // Local Unit Tests
+    implementation "androidx.test:core:$androidx_test_core"
+    testImplementation "junit:junit:$junit"
+    testImplementation "com.google.truth:truth:$truth"
+    testImplementation "app.cash.turbine:turbine:$turbine"
+
+
+    // Instrumented Unit Tests
+    androidTestImplementation "junit:junit:$junit"
+    androidTestImplementation "androidx.test.ext:junit:$androidx_test_ext_junit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core"
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$dagger_hilt_testing"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$dagger_hilt_compiler"
 
     //Android Views
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayout"
@@ -92,9 +102,8 @@ dependencies {
     //Glide
     implementation "com.github.bumptech.glide:glide:$glide"
     kapt "com.github.bumptech.glide:compiler:$glide"
-    implementation "com.squareup.okhttp3:okhttp:4.9.0"
-    implementation ('com.github.bumptech.glide:okhttp3-integration:4.7.1'){
+    implementation "com.squareup.okhttp3:okhttp:$okhttp3"
+    implementation ("com.github.bumptech.glide:okhttp3-integration:$glide_okhttp3"){
         exclude group: 'glide-parent'
     }
-
 }
