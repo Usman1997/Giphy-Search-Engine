@@ -75,6 +75,18 @@ class SearchViewModel
     }
 
     /**
+     * This function will calculate the total number of pages and return true if the
+     * current page is last page
+     */
+    fun isLastPage(totalCount: Int): Boolean {
+        var totalPage = totalCount / Constants.QUERY_PER_PAGE
+        if (totalCount % Constants.QUERY_PER_PAGE != 0) {
+            totalPage++
+        }
+        return currentPage == totalPage
+    }
+
+    /**
      * This function is to reset the page and search response when the user search new keywords
      * so that the old data will be removed and new data is shown to the user
      */

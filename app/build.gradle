@@ -1,5 +1,5 @@
 /*
- Created by Usman Siddiqui on 09.09.2021
+ Created by Usman Siddiqui
  */
 
 plugins {
@@ -55,7 +55,6 @@ dependencies {
 
 
     //Android Views
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayout"
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayout"
 
     //Android App Compat
@@ -77,9 +76,6 @@ dependencies {
 
     // Google Material
     implementation "com.google.android.material:material:$material"
-
-    // Lottie
-    implementation "com.airbnb.android:lottie:$lottie"
 
     //Hilt for dependency Injection
     implementation "com.google.dagger:hilt-android:$hilt_version"

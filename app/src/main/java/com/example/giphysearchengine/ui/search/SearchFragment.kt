@@ -73,7 +73,7 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(R.layout.search_fragm
                         hideProgressBar()
                         hideErrorView()
                         state.data?.let {
-                            isLastPage = isLastPage(it.pagination.total_count)
+                            isLastPage = viewModel.isLastPage(it.pagination.total_count)
                             if(isLastPage) list.setPadding(0, 0, 0, 0)
                             listAdapter.differ.submitList(it.data.toList())
                         }
@@ -168,13 +168,4 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(R.layout.search_fragm
     private fun showErrorView() {
         isError = true
     }
-
-    private fun isLastPage(totalCount: Int): Boolean {
-        var totalPage = totalCount / Constants.QUERY_PER_PAGE
-        if (totalCount % Constants.QUERY_PER_PAGE != 0) {
-            totalPage++
-        }
-        return viewModel.currentPage == totalPage
-    }
-
 }
