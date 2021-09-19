@@ -71,9 +71,8 @@ class SearchViewModel
                 val newData = response.data
                 oldData?.addAll(newData)
             }
-            return State.idle(searchResponse)
         }
-        return State.idle(searchResponse ?: response)
+        return State.idle(searchResponse)
     }
 
     /**
