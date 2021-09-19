@@ -13,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.giphysearchengine.R
 import com.example.giphysearchengine.databinding.SearchFragmentBinding
@@ -118,7 +117,7 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(R.layout.search_fragm
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
 
-            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+            val layoutManager = recyclerView.layoutManager as GridLayoutManager
             val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
             val visibleItemCount = layoutManager.childCount
             val totalItemCount = layoutManager.itemCount
