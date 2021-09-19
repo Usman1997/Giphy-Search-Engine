@@ -10,11 +10,11 @@ package com.example.giphysearchengine.utils
  * server. Idle -> when the response is successful.
  */
 sealed class State<T>(
-    open val data: T?
+    val data: T? = null
 ) {
-    class Idle<T>(override val data: T? = null) : State<T>(data)
-    class Error<T>(override val data: T? = null, val error: Throwable) : State<T>(data)
-    class Loading<T>(override val data: T? = null) : State<T>(data)
+    class Idle<T>(data: T? = null) : State<T>(data)
+    class Error<T>(val error: Throwable) : State<T>()
+    class Loading<T> : State<T>()
 
     companion object {
         fun <T> loading(): State<T> {
@@ -26,7 +26,7 @@ sealed class State<T>(
         }
 
         fun <T> error(error: Throwable): State<T> {
-            return Error(null, error)
+            return Error(error)
         }
     }
 
