@@ -19,8 +19,7 @@ class FakeSearchRepository : SearchRepository {
     override suspend fun search(
         param: String,
         offset: Int,
-        rating: String,
-        lang: String
+        rating: String
     ): Flow<State<SearchResponse>> {
         return if (shouldReturnNetworkError) flowWithErrorState()
         else flowWithIdleState()

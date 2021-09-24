@@ -5,11 +5,10 @@
 package com.example.giphysearchengine.di
 
 import com.example.giphysearchengine.BuildConfig
-import com.example.giphysearchengine.network.ApiKeyInterceptorOkHttpClient
-import com.example.giphysearchengine.network.ErrorInterceptorOkHttpClient
-import com.example.giphysearchengine.network.GiphyService
+import com.example.giphysearchengine.network.*
 import com.example.giphysearchengine.network.interceptors.ApiKeyInterceptor
 import com.example.giphysearchengine.network.interceptors.ErrorInterceptor
+import com.example.giphysearchengine.network.interceptors.LanguageInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,6 +45,14 @@ object NetworkModule {
     fun providesApiKeyInterceptor(): Interceptor = ApiKeyInterceptor()
 
     /**
+     * Interceptor to inject language in query param for every request
+     */
+    @LanguageInterceptorOkHttpClient
+    @Singleton
+    @Provides
+    fun providesLanguageInterceptor(): Interceptor = LanguageInterceptor()
+
+    /**
      * Error Interceptor for error handling. We need this annotation (qualifiers) to
      * have multiple binding for same type. Since both APIKeyInterceptor and ErrorInterceptor
      * have same type (Interceptor), we need qualifiers to differentiate them
@@ -63,12 +70,14 @@ object NetworkModule {
     fun providesOkhttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
         @ApiKeyInterceptorOkHttpClient apiKeyInterceptor: Interceptor,
-        @ErrorInterceptorOkHttpClient errorInterceptor: Interceptor
+        @ErrorInterceptorOkHttpClient errorInterceptor: Interceptor,
+        @LanguageInterceptorOkHttpClient languageInterceptor: Interceptor
     ) =
         OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(apiKeyInterceptor)
             .addInterceptor(errorInterceptor)
+            .addInterceptor(languageInterceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)

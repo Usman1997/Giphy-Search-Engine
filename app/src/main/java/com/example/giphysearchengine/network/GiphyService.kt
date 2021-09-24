@@ -15,6 +15,5 @@ interface GiphyService {
         @Query("limit") limit: Int,
         @Query("offset") offset: Int,
         @Query("rating") rating: String,
-        @Query("lang") lang: String,
     ): SearchResponse
 }

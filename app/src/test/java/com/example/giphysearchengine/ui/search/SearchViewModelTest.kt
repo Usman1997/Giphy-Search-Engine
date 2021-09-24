@@ -5,7 +5,6 @@ package com.example.giphysearchengine.ui.search
 
 import app.cash.turbine.test
 import com.example.giphysearchengine.repository.FakeSearchRepository
-import com.example.giphysearchengine.utils.Constants
 import org.junit.Before
 import org.junit.Test
 import com.example.giphysearchengine.utils.Rating
@@ -61,8 +60,7 @@ class SearchViewModelTest {
         val flow = fakeSearchRepository.search(
             "",
             0,
-            Rating.G.value,
-            Constants.lang
+            Rating.G.value
         )
 
         flow.test {
@@ -81,8 +79,7 @@ class SearchViewModelTest {
             val flow = fakeSearchRepository.search(
                 "",
                 0,
-                Rating.G.value,
-                Constants.lang
+                Rating.G.value
             )
 
             flow.test {

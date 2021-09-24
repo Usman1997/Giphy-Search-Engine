@@ -16,8 +16,7 @@ interface SearchRepository {
     suspend fun search(
         param: String,
         offset: Int,
-        rating: String = Rating.G.value,
-        lang: String = Constants.lang
+        rating: String = Rating.G.value
     ): Flow<State<SearchResponse>>
 }
 
@@ -28,15 +27,14 @@ class SearchRepositoryImpl(
     /**
      * This function will communicate with server to fetch data from API
      */
-    override suspend fun search(param: String, offset: Int, rating: String, lang: String) =
+    override suspend fun search(param: String, offset: Int, rating: String) =
         flow {
             emit(
                 giphyService.search(
                     param,
                     Constants.QUERY_PER_PAGE,
                     offset,
-                    rating,
-                    lang
+                    rating
                 )
             )
         }

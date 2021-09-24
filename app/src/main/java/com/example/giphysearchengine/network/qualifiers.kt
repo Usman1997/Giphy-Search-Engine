@@ -18,3 +18,7 @@ annotation class ApiKeyInterceptorOkHttpClient
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class ErrorInterceptorOkHttpClient
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class LanguageInterceptorOkHttpClient
