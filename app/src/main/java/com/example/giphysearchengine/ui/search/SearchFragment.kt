@@ -74,7 +74,7 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(R.layout.search_fragm
                         state.data?.let {
                             isLastPage = viewModel.isLastPage(it.pagination.total_count)
                             if (isLastPage) list.setPadding(0, 0, 0, 0)
-                            listAdapter.differ.submitList(it.data.toList())
+                            listAdapter.submitList(it.data.toList())
                         }
                     }
                 }
