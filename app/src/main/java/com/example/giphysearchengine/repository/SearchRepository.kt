@@ -38,7 +38,7 @@ class SearchRepositoryImpl(
                 )
             )
         }
-            .map { State.idle(it) }
+            .map { State.success(it) }
             .catch { emit(State.error(it)) }
             .onStart { emit(State.loading()) }
 

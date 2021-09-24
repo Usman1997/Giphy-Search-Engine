@@ -68,7 +68,7 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>(R.layout.search_fragm
                         root.showSnackBar(state.error.toLocalizedMessage(resources))
                     }
 
-                    is State.Idle -> {
+                    is State.Success -> {
                         hideProgressBar()
                         hideErrorView()
                         state.data?.let {

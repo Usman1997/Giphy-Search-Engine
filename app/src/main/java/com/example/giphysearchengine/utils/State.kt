@@ -12,7 +12,7 @@ package com.example.giphysearchengine.utils
 sealed class State<T>(
     val data: T? = null
 ) {
-    class Idle<T>(data: T? = null) : State<T>(data)
+    class Success<T>(data: T? = null) : State<T>(data)
     class Error<T>(val error: Throwable) : State<T>()
     class Loading<T> : State<T>()
 
@@ -21,8 +21,8 @@ sealed class State<T>(
             return Loading()
         }
 
-        fun <T> idle(data: T?): State<T> {
-            return Idle(data)
+        fun <T> success(data: T?): State<T> {
+            return Success(data)
         }
 
         fun <T> error(error: Throwable): State<T> {

@@ -56,7 +56,7 @@ class FakeSearchRepository : SearchRepository {
 
         return flow {
             emit(State.loading())
-            emit(State.idle(searchResponse))
+            emit(State.success(searchResponse))
         }
     }
 

@@ -84,7 +84,7 @@ class SearchViewModelTest {
 
             flow.test {
                 assertThat(awaitItem() is State.Loading).isTrue()
-                assertThat(awaitItem() is State.Idle).isTrue()
+                assertThat(awaitItem() is State.Success).isTrue()
                 awaitComplete()
             }
         }

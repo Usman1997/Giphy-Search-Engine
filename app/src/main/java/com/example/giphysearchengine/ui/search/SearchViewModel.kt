@@ -48,7 +48,7 @@ class SearchViewModel
     private fun emitResponse(responseState: State<SearchResponse>) = when (responseState) {
         is State.Loading -> state.postValue(State.loading())
         is State.Error -> state.postValue(State.error(responseState.error))
-        is State.Idle -> state.postValue(handleResponse(responseState.data))
+        is State.Success -> state.postValue(handleResponse(responseState.data))
     }
 
     /**
@@ -72,7 +72,7 @@ class SearchViewModel
                 oldData?.addAll(newData)
             }
         }
-        return State.idle(searchResponse)
+        return State.success(searchResponse)
     }
 
     /**
