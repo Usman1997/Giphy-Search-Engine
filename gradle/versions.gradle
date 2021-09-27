@@ -8,7 +8,7 @@ ext {
 
     coroutine_core = "1.4.21"
 
-    lifecycle = "2.4.0-alpha03"
+    lifecycle = "2.4.0-beta01"
 
     navigation = "2.3.5"
 
@@ -51,5 +51,7 @@ ext {
     okhttp3 = "4.9.0"
 
     glide_okhttp3 = "4.7.1"
+
+    paging_version = "3.1.0-alpha03"
 
 }
