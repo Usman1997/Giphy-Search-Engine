@@ -8,9 +8,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.view.ViewCompat
-import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.giphysearchengine.R
@@ -20,7 +19,7 @@ import com.example.giphysearchengine.network.entity.Data
 
 class SearchListAdapter(
     private val onClick: (Data, ImageView) -> Unit
-) : ListAdapter<Data, SearchListAdapter.ViewHolder>(SearchDiffCallback) {
+) : PagingDataAdapter<Data, SearchListAdapter.ViewHolder>(SearchDiffCallback) {
 
     inner class ViewHolder(val binding: SearchListItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -34,8 +33,6 @@ class SearchListAdapter(
             )
         )
 
-    override fun getItemCount(): Int = currentList.size
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.binding) {
             val context = root.context
@@ -43,16 +40,16 @@ class SearchListAdapter(
             val item = getItem(position)
 
             GlideApp.with(context)
-                .load(item.images.preview_gif.url)
+                .load(item?.images?.preview_gif?.url)
                 .centerCrop()
                 .placeholder(R.drawable.bg_placeholder)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(ivImage)
 
-            ViewCompat.setTransitionName(ivImage, item.images.preview_gif.url)
+            ViewCompat.setTransitionName(ivImage, item?.images?.preview_gif?.url)
 
             root.setOnClickListener {
-                onClick(item, ivImage)
+                onClick(item!!, ivImage)
             }
         }
     }

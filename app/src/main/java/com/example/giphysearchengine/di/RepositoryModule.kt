@@ -5,6 +5,8 @@
 package com.example.giphysearchengine.di
 
 import com.example.giphysearchengine.network.GiphyService
+import com.example.giphysearchengine.repository.SearchPagingRepository
+import com.example.giphysearchengine.repository.SearchPagingSource
 import com.example.giphysearchengine.repository.SearchRepository
 import com.example.giphysearchengine.repository.SearchRepositoryImpl
 import dagger.Module
@@ -26,4 +28,8 @@ object RepositoryModule {
     fun provideSearchRepository(
         giphyService: GiphyService
     ): SearchRepository = SearchRepositoryImpl(giphyService)
+
+    @Singleton
+    @Provides
+    fun provideSearchPagingRepository(giphyService: GiphyService) = SearchPagingRepository(giphyService)
 }
